@@ -47,9 +47,33 @@ def home_page():
 def page_v(page):
     if page == "HomePage":
         return home_page()
-    if page == "all":
+    elif page == "all":
         return page_index()
+    elif page == "recent":
+        return recent_changes()
     elif page_exist(page):
         return load_page(page)
         
     return redirect(f"/e/{page}")
+
+def recent_changes():
+    with open("data/log.txt", "r") as logfile:
+        logfile = logfile.read().strip().splitlines()
+    logfile = logfile[-20:]
+    log = []
+    for i in logfile:
+        i = i.split()
+        if len(i) > 5:
+            i[4] = " ".join(i[4])
+        pn = i[1].split(".")[0]
+        pn = f"<a style='color:green' href='/w/{pn}'>{pn}</a>"
+        mod = time.gmtime(int(i[0]))
+        mod = time.strftime('%Y-%m-%d %H:%M', mod)
+        i = [pn, i[4], mod, i[3]]
+        log.append("<tr><td>" + "<td>".join(i))
+    page = "\n".join(page_head("Recent changes"))
+    page += "\n<table>"
+    page += "\n<th>Page<th>Author<th>Time<th>Char\n"
+    page += "\n".join(log[::-1])
+    page += "\n</table>\n<p><a style='color:darkred' href='/w/'>home</a>"
+    return page

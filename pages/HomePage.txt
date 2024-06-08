@@ -15,4 +15,4 @@ Please keep in mind that WikiWikiWiki is NOT a WikiWiki'Wiki. Go to
 [Meatball Wiki](http://meatballwiki.org/wiki/) if you are into that kind
 of thing. We are something more like TanasinnWiki back in its glory days. 
 
-See also: [All Pages](/w/all)
+See also: [All Pages](/w/all) , [Recent Changes](/w/recent)

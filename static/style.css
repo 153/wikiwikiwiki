@@ -3,8 +3,14 @@ body {
      max-width: 700px;
      padding-left: 40px;
      padding-top: 20px;
-     }
+}
 
 a {
   color: blue;
-  }
+}
+
+table {border-collapse: collapse;
+       border:2px solid black;
+      }
+td {border:1px solid black; padding: 3px}
+th {border: 1px solid black; padding: 3px;}

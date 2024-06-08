@@ -6,6 +6,70 @@ from utils import *
 
 edit = Blueprint("edit", __name__)
 
+def fn_check(fn):
+    print(fn)
+    if " " in fn:
+        fn = fn.replace(" ", "_")
+    fn = re.sub(r"[^a-zA-Z0-9_]", "", fn)
+    print(fn)
+    return fn
+
+def publish(title, content, author=None):
+    if not wl.approve():
+        return wl.show_captcha(0, f"/e/{title}")
+    if title in ["HomePage", "all", "MarkUp"]:
+        return "Sorry, you can't edit these pages."
+
+    ip = wl.get_ip()
+    # Cleanup input
+    data = request.form
+    author = author.strip()[:25]    
+    title = title[:20]
+    if "\r" in content:
+        content = content.replace("\r", "")
+    content = content.strip()[:10000]
+
+    # Debug 
+    page = [f"<meta http-equiv='refresh' content='3; url=/w/{title}'>"]
+    page.append("You will be redirected in 3 seconds...")
+    page.append("<pre>")
+    
+    # Get revision number
+    fn = title + ".txt"
+    revisions = []
+    pages = os.listdir("pages")
+    for f in pages:
+        if f.startswith(fn + "."):
+            revisions.append(f)
+
+    fnr = fn + "." + str(len(revisions))
+    page.append(f"Revision: {fnr}")
+
+    # Write the page 
+    with open(f"pages/{fnr}", "w") as rev:
+        rev.write(content)
+    if len(content) > 0:
+        with open(f"pages/{fn}", "w") as rev:
+            rev.write(content)
+    else:
+        os.remove(f"pages/{fn}")
+
+    lcon = str(len(content))
+    update_log(fnr, lcon, author, ip)
+
+    return "\n".join(page)
+
+def update_log(fn, lcon, author, ip):
+    udt = str(int(time.time()))
+    lf = "data/log.txt"
+    with open(lf, "r") as logfile:
+        logfile = logfile.read().strip().splitlines()
+    line = " ".join([udt, fn, ip, lcon, author])
+    logfile.append(line)
+    logfile = "\n".join(logfile)
+    with open(lf, "w") as log:
+        log.write(logfile)
+
 @edit.route("/e/", methods=["GET"])
 def new_page():
     head = "\n".join(page_head("Edit"))
@@ -49,52 +113,3 @@ def page_editor(page=None):
     head = "\n".join(page_head(f"Edit: {title}"))
     preview = head + preview
     return preview
-
-def fn_check(fn):
-    print(fn)
-    if " " in fn:
-        fn = fn.replace(" ", "_")
-    fn = re.sub(r"[^a-zA-Z0-9_]", "", fn)
-    print(fn)
-    return fn
-
-def publish(title, content, author=None):
-    if not wl.approve():
-        return wl.show_captcha(0, f"/e/{title}")
-    if title in ["HomePage", "all", "MarkUp"]:
-        return "Sorry, you can't edit these pages."
-
-    # Cleanup input
-    data = request.form
-    author = author.strip()[:25]    
-    title = title[:20]
-    if "\r" in content:
-        content = content.replace("\r", "")
-    content = content.strip()[:10000]
-
-    # Debug 
-    page = [f"<meta http-equiv='refresh' content='3; url=/w/{title}'>"]
-    page.append("You will be redirected in 3 seconds...")
-    page.append("<pre>")
-    
-    # Get revision number
-    fn = title + ".txt"
-    revisions = []
-    pages = os.listdir("pages")
-    for f in pages:
-        if f.startswith(fn + "."):
-            revisions.append(f)
-
-    fnr = fn + "." + str(len(revisions))
-    page.append(f"Revision: {fnr}")
-
-    # Write the page 
-    with open(f"pages/{fnr}", "w") as rev:
-        rev.write(content)
-    if len(content) > 0:
-        with open(f"pages/{fn}", "w") as rev:
-            rev.write(content)
-    else:
-        os.remove(f"pages/{fn}")
-
-    return "\n".join(page)
