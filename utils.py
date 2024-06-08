@@ -6,7 +6,7 @@ def page_index():
     page += "<h1>All Pages</h1><ul>"
     page += "<style>a {color: green}</style>"
     
-    for p in pagedir:
+    for p in sorted(pagedir):
         if p[-4:] == ".txt":
             p = p[:-4]
             page += f"<li> <a href='/w/{p}'>{p}</a>"
