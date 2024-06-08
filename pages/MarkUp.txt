@@ -1,0 +1,11 @@
+Funny enough, our MarkUp engine is actually MarkDown. 
+
+There are a few changes:
+
+* If you want to reference a URL, wrap it with < angled brackets >
+* The best way to reference a name is with PascalCase ...
+    * ... but you can use [[[[brackets]]]] to reference pages in odd cases.
+* You can make make a page title part of a word by adding ' apostrophe after the title
+    * ... notice how TestTest''s become TestTest's, vs TestTests ... 
+    * ... or WikiWiki'Wiki vs WikiWikiWiki...
+    * ... although [[cloan]]s works fine!
