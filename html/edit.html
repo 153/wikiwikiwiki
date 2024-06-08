@@ -2,9 +2,8 @@
 
 <hr>
 
-<form action="/e/" method="post">
-<textarea rows="15" style="width:680px" name="content">{1}
-</textarea>
+<form action="/e/{2}" method="post">
+<textarea rows="15" style="width:680px" name="content">{1}</textarea>
 
 <p>
 
@@ -13,6 +12,7 @@ Preview
 <input type="checkbox" name="preview" checked>
 <input type="submit" value="Submit">
 
-Author: <input type="text" name="author" placeholder="Anonymous">
+Author:
+<input type="text" name="author" placeholder="Anonymous" value="{3}">
 
 </form>
