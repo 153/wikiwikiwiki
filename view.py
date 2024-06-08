@@ -58,6 +58,47 @@ def recent_changes():
     page += "\n</table>\n<p><a style='color:darkred' href='/w/'>home</a>"
     return page
 
+def popular():
+    with open("data/links.txt", "r") as linkdb:
+        linkdb = linkdb.read().strip().splitlines()
+    linkdb = [x.split() for x in linkdb]
+    linkdb.sort(key=len, reverse=True)
+    
+    exist = []
+    nexist = []
+    for x in linkdb:
+        if page_exist(x[0]):
+            exist.append([x[0], str(len(x) - 1)])
+        else:
+            nexist.append([x[0], str(len(x) - 1)])
+            
+    popular = []
+    wanted = []
+    orphans = []
+    for e in exist:
+        if int(e[1]) > 0:
+            popular.append(f"<a style='color:green' href='/w/{e[0]}'>{e[0]}</a>")
+            if int(e[1]) > 1:
+                popular[-1] += f" ({e[1]})"
+        else:
+            orphans.append(f"<a style='color:green' href='/w/{e[0]}'>{e[0]}</a>")
+    for n in nexist[:30]:
+        wanted.append(f"<a style='color:red' href='/e/{n[0]}'>{n[0]}</a>")
+        if int(n[1]) > 1:
+            wanted[-1] += f" ({n[1]})"
+
+    popular = "<b>Popular:</b> <ol><li>" + "<li>".join(popular[:30]) + "</ol>"
+    orphans = "<b>Orphans:</b> <ol><li>" + "<li>".join(orphans[:30]) + "</ol>"
+    wanted = "<b>Wanted:</b><ol><li>" + "<li>".join(wanted) + "</ol>"
+
+    page = page_head("Popularity")
+    page.append("Top 30 for each category. <p>")
+    page += [popular, orphans, wanted]
+    page = "\n".join(page)
+    page += "<hr><a style='color:darkred' href='/w/'>home</a>"
+    return page
+        
+    
 @view.route("/")
 def home():
     return redirect("/w/")
@@ -74,6 +115,9 @@ def page_v(page):
         return page_index()
     elif page == "recent":
         return recent_changes()
+    elif page == "popular":
+        return popular()
+
     elif page_exist(page):
         return load_page(page)
         

@@ -10,6 +10,7 @@ def page_index():
         if p[-4:] == ".txt":
             p = p[:-4]
             page += f"<li> <a href='/w/{p}'>{p}</a>"
+    page += "</ul><a style='color:darkred' href='/w/'>home</a>"
     return page
 
 def page_exist(page):

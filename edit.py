@@ -93,6 +93,9 @@ def backlinks(fn, content):
         else:
             links[entry].append(fn)
             links[entry] = list(set(links[entry]))
+    if fn not in links:
+        links[fn] = []
+        
     print("!!!")
     print(links)
 
