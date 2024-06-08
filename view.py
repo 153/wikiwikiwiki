@@ -47,4 +47,4 @@ def page_v(page):
     elif page_exist(page):
         return load_page(page)
         
-    return page + " -- Page does not exist"
+    return redirect(f"/e/{page}")

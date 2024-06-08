@@ -6,6 +6,11 @@ from utils import *
 
 edit = Blueprint("edit", __name__)
 
+@edit.route("/e/", methods=["GET"])
+def new_page():
+    head = "\n".join(page_head("Edit"))
+    return head + "To create a new page, please follow a RedLink"
+
 @edit.route("/e/", methods = ["POST"])
 @edit.route("/e/<page>", methods=["POST", "GET"])
 def page_editor(page=None):
@@ -51,15 +56,18 @@ def fn_check(fn):
     return fn
 
 def publish(title, content, author=None):
+    if title in ["HomePage", "AllPages", "MarkUp"]:
+        return "Sorry, you can't edit these pages."
     data = request.form
     title = title[:20]
     content = content.strip()[:10000]
     if "\r" in content:
         content = content.replace("\r", "")
     author = author.strip()[:25]
-    page = ["<pre>"]
+    page = [f"<meta http-equiv='refresh' content='3; url=/w/{title}'>"]
+    page.append("<pre>")
     page.append(f"title: {title}")
-    page.append(f"content: {content}")
+    page.append(f"content:\n{content}")
     page.append(f"author: {author}")
 
     fn = title + ".txt"
@@ -67,7 +75,7 @@ def publish(title, content, author=None):
 
     pages = os.listdir("pages")
     for f in pages:
-        if fn + "." in f:
+        if f.startswith(fn + "."):
             revisions.append(f)
     page.append(str(revisions))
     fnr = fn + "." + str(len(revisions))
