@@ -21,6 +21,7 @@ def publish(title, content, author=None):
         return "Sorry, you can't edit these pages."
 
     ip = wl.get_ip()
+    
     # Cleanup input
     data = request.form
     author = author.strip()[:25]    
@@ -56,6 +57,7 @@ def publish(title, content, author=None):
 
     lcon = str(len(content))
     update_log(fnr, lcon, author, ip)
+    backlinks(title, content)
 
     return "\n".join(page)
 
@@ -69,6 +71,36 @@ def update_log(fn, lcon, author, ip):
     logfile = "\n".join(logfile)
     with open(lf, "w") as log:
         log.write(logfile)
+
+def backlinks(fn, content):
+    links = {}
+    with open("data/links.txt", "r") as linkdb:
+        linkdb = linkdb.read().strip().splitlines()
+    for line in linkdb:
+        line = line.split(" ")
+        links[line[0]] = line[1:]
+    print(links)
+    print("!!!!!")
+    linksout = link_processor(content, 1)
+    print(linksout)
+    
+    if fn in linksout:
+        linksout.remove(fn)
+        
+    for entry in linksout:
+        if entry not in links:
+            links[entry] = [fn]
+        else:
+            links[entry].append(fn)
+            links[entry] = list(set(links[entry]))
+    print("!!!")
+    print(links)
+
+    links = [" ".join([x, *links[x]]) for x in links]
+    links = "\n".join(links)
+    with open("data/links.txt", "w") as linkdb:
+        linkdb.write(links)
+    print(links)
 
 @edit.route("/e/", methods=["GET"])
 def new_page():

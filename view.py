@@ -30,31 +30,11 @@ def format_page(title, content, preview=0):
     template.append(content)
     template.append("<hr>")
     template.append(f"<a style='color:darkred' href='/w/'>home</a> ")
+    template.append(f"// <a style='color:darkred' href='/r/{title}'>reverse</a>")
     template.append(f"// <a style='color:darkred' href='/e/{title}'>edit</a>")
     template.append("// modified: " + modified)
 
     return "\n".join(template)
-
-@view.route("/")
-def home():
-    return redirect("/w/")
-
-@view.route("/w/")
-def home_page():
-    return load_page("HomePage")
-
-@view.route("/w/<page>")
-def page_v(page):
-    if page == "HomePage":
-        return home_page()
-    elif page == "all":
-        return page_index()
-    elif page == "recent":
-        return recent_changes()
-    elif page_exist(page):
-        return load_page(page)
-        
-    return redirect(f"/e/{page}")
 
 def recent_changes():
     with open("data/log.txt", "r") as logfile:
@@ -77,3 +57,49 @@ def recent_changes():
     page += "\n".join(log[::-1])
     page += "\n</table>\n<p><a style='color:darkred' href='/w/'>home</a>"
     return page
+
+@view.route("/")
+def home():
+    return redirect("/w/")
+
+@view.route("/w/")
+def home_page():
+    return load_page("HomePage")
+
+@view.route("/w/<page>")
+def page_v(page):
+    if page == "HomePage":
+        return home_page()
+    elif page == "all":
+        return page_index()
+    elif page == "recent":
+        return recent_changes()
+    elif page_exist(page):
+        return load_page(page)
+        
+    return redirect(f"/e/{page}")
+
+@view.route("/r/<title>")
+def backlinks(title):
+    page = page_head(f"Reverse: {title}")
+    page.append("<ul>")
+    page.append(f"<li><a style='color:darkred' href='/w/{title}'>{title}</a><p>")
+    with open("data/links.txt", "r") as linkdb:
+        linkdb = linkdb.read().strip().splitlines()
+    linkdb = [x.split() for x in linkdb]
+    print(linkdb)
+    links = []
+    for x in linkdb:
+        if x[0] == title:
+            links += x[1:]
+    print(links)
+    linklist = []
+    for x in links:
+        if page_exist(x):
+            linklist.append(f"<li><a style='color:green' href='/w/{x}'>{x}</a>")
+        else:
+            linklist.append(f"<li><a style='color:red' href='/e/{x}'>{x}</a>")
+    page += sorted(linklist)
+    page.append("</ul>")
+    print(links)
+    return "\n".join(page)

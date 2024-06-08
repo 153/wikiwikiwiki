@@ -18,7 +18,7 @@ def page_exist(page):
         return True
     return False
 
-def link_processor(content):
+def link_processor(content, getlinks=0):
     w_link = "<a style='color:green' href='/w/{0}'>{0}</a>"
     n_link = "<a style='color:red' href='/e/{0}'>{0}</a>"
     links = []
@@ -41,6 +41,9 @@ def link_processor(content):
 
     content = content.replace("</a>'", "</a>")
     content = content.replace("</a>\\", "</a>")
+
+    if getlinks == 1:
+        return list(set(links))
     return content
 
 def page_head(title):
