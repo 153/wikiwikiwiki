@@ -96,7 +96,7 @@ def popular():
         else:
             orphans.append(f"<a style='color:green' href='/w/{e[0]}'>{e[0]}</a>")
     for n in nexist[:30]:
-        wanted.append(f"<a style='color:red' href='/e/{n[0]}'>{n[0]}</a>")
+        wanted.append(f"<a style='color:red' href='/r/{n[0]}'>{n[0]}</a>")
         if int(n[1]) > 1:
             wanted[-1] += f" ({n[1]})"
 
