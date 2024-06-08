@@ -36,6 +36,19 @@ def format_page(title, content, preview=0):
 
     return "\n".join(template)
 
+def page_index():
+    pagedir = os.listdir("pages")
+    page = "\n".join(page_head("All pages"))
+    page += "\n<style>a {color: green}</style>"
+    page += "\n<ol style='columns: 3'>"
+    
+    for p in sorted(pagedir):
+        if p[-4:] == ".txt":
+            p = p[:-4]
+            page += f"\n<li> <a href='/w/{p}'>{p}</a>"
+    page += "\n</ol>\n<a style='color:darkred' href='/w/'>home</a>"
+    return page
+
 def recent_changes():
     with open("data/log.txt", "r") as logfile:
         logfile = logfile.read().strip().splitlines()
@@ -93,7 +106,10 @@ def popular():
 
     page = page_head("Popularity")
     page.append("Top 30 for each category. <p>")
-    page += [popular, orphans, wanted]
+    page.append("<div class='row'>")
+    for i in [popular, orphans, wanted]:
+        page.append(f"<div class='column'>{i}</div>")
+    page.append("</div>")
     page = "\n".join(page)
     page += "<hr><a style='color:darkred' href='/w/'>home</a>"
     return page

@@ -1,18 +1,5 @@
 import os, re, time
 
-def page_index():
-    pagedir = os.listdir("pages")
-    page = "<link rel='stylesheet' href='/style.css'>"
-    page += "<h1>All Pages</h1><ul>"
-    page += "<style>a {color: green}</style>"
-    
-    for p in sorted(pagedir):
-        if p[-4:] == ".txt":
-            p = p[:-4]
-            page += f"<li> <a href='/w/{p}'>{p}</a>"
-    page += "</ul><a style='color:darkred' href='/w/'>home</a>"
-    return page
-
 def page_exist(page):
     pagedir = os.listdir("pages") 
     if page + ".txt" in pagedir:
