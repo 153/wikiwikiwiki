@@ -57,7 +57,7 @@ def recent_changes():
     for i in logfile:
         i = i.split()
         if len(i) > 5:
-            i[4] = " ".join(i[4])
+            i[4] = " ".join(i[4:])
         pn = i[1].split(".")[0]
         pn = f"<a style='color:green' href='/w/{pn}'>{pn}</a>"
         mod = time.gmtime(int(i[0]))
