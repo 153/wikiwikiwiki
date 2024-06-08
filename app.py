@@ -1,6 +1,7 @@
 from flask import Flask, request
 from view import view
 from edit import edit
+from whitelist import whitelist
 
 
 app = Flask(__name__,
@@ -10,6 +11,7 @@ app = Flask(__name__,
 
 app.register_blueprint(view)
 app.register_blueprint(edit)
+app.register_blueprint(whitelist)
 
 
 if __name__ == "__main__":

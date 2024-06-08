@@ -2,6 +2,7 @@ import os, re, time
 from flask import Blueprint, request, redirect
 import markdown
 import view
+import whitelist as wl
 from utils import *
 
 edit = Blueprint("edit", __name__)
@@ -36,9 +37,11 @@ def page_editor(page=None):
             if len(author):
                 author = data["author"]
         if not "preview" in data:
-            if len(title) and len(content):
+            if len(title):
                 return publish(title, content, author)
 
+    if not wl.approve():
+        return wl.show_captcha(0, f"/e/{title}")
     with open("html/edit.html") as temp:
         temp = temp.read()
     preview = view.format_page(title, content, True)
@@ -56,6 +59,8 @@ def fn_check(fn):
     return fn
 
 def publish(title, content, author=None):
+    if not wl.approve():
+        return wl.show_captcha(0, f"/e/{title}")
     if title in ["HomePage", "all", "MarkUp"]:
         return "Sorry, you can't edit these pages."
 
@@ -69,6 +74,7 @@ def publish(title, content, author=None):
 
     # Debug 
     page = [f"<meta http-equiv='refresh' content='3; url=/w/{title}'>"]
+    page.append("You will be redirected in 3 seconds...")
     page.append("<pre>")
     page.append(f"title: {title}")
     page.append(f"content:\n{content}")
@@ -90,7 +96,10 @@ def publish(title, content, author=None):
     # Write the page 
     with open(f"pages/{fnr}", "w") as rev:
         rev.write(content)
-    with open(f"pages/{fn}", "w") as rev:
-        rev.write(content)
-        
+    if len(content) > 0:
+        with open(f"pages/{fn}", "w") as rev:
+            rev.write(content)
+    else:
+        os.remove(f"pages/{fn}")
+
     return "\n".join(page)

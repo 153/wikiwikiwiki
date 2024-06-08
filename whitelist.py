@@ -71,17 +71,20 @@ def approve(ip=0, key=""):
 
 @whitelist.route('/captcha/')
 def show_captcha(hide=0, redir='.'):
-    from view import ld_page, mk_page
     ip = get_ip()
     mylog = addlog(ip)
     out = ""
     if not approve():
-        out += ld_page("captcha_form").format(mylog[ip][1], redir)
+        with open("static/captcha.html", "r") as capt:
+            capt = capt.read()
+        out += capt.format(mylog[ip][1], redir)
     else:
         out += "Your IP is approved for posting"
     if hide:
         return out
-    return mk_page(out)
+    from view import page_head
+    ph = "\n".join(page_head("Captcha"))
+    return ph + out
 
 @whitelist.route('/captcha/refresh')
 def refresh():
@@ -91,7 +94,6 @@ def refresh():
 
 @whitelist.route('/captcha/check', methods=['POST', 'GET'])
 def check(redir=""):
-    from view import ld_page, mk_page    
     key = request.args.get('key').lower()
     redir = request.args.get('redir')
     ip = get_ip()
@@ -108,10 +110,11 @@ def check(redir=""):
         out += f"<meta http-equiv='refresh' content='3;URL={redir}'>"
         if os.path.isfile(f"./static/cap/{ip}.png"):
             os.remove(f"./static/cap/{ip}.png")
+    from view import page_head
+    ph = "\n".join(page_head("Captcha"))
+    return ph + out
 
-    return mk_page(out)
-
-def flood(mode="comment"):
+def flood():
     # Completely rewrite this
     ip = get_ip()
     tnow = str(int(time.time()))
@@ -122,12 +125,6 @@ def flood(mode="comment"):
     log = [x for x in log if x[0] == ip]
     if not log: return False
     
-    if mode == "comment":
-        try: last = [x for x in log if ":" in x[3]][-1]
-        except: return False
-    elif mode == "thread":
-        try: last = [x for x in log if not ":" in x[3]][-1]
-        except: return False
     pause = int(tnow) - int(last[2])
     diff = limit - pause
     msg = diff
