@@ -13,7 +13,8 @@ table {border-collapse: collapse;
        border:2px solid black;
       }
 td {border:1px solid black; padding: 3px}
-th {border: 1px solid black; padding: 3px;}
+th {border: 2px solid #666; padding: 3px;
+    background-color: #222; color: #ddd}
 
 .row {border: 3px solid black;
       padding:8px;}
