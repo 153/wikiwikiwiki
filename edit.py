@@ -24,7 +24,7 @@ def publish(title, content, author=None):
     
     # Cleanup input
     data = request.form
-    author = author.strip()[:25]    
+    author = author[:25].strip()
     title = title[:20]
     if "\r" in content:
         content = content.replace("\r", "")
@@ -130,7 +130,7 @@ def page_editor(page=None):
         if "content" in data:
             content = data["content"].strip()
         if "author" in data:
-            if len(author):
+            if len(data["author"]):
                 author = data["author"]
         if not "preview" in data:
             if len(title):
