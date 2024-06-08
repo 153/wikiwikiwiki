@@ -1,6 +1,5 @@
 import os, re, time
 from flask import Blueprint, request, redirect
-import markdown
 import view
 import whitelist as wl
 from utils import *
@@ -72,10 +71,7 @@ def publish(title, content, author=None):
     if "\r" in content:
         content = content.replace("\r", "")
     content = content.strip()[:10000]
-    if "<" in content:
-        content = content.replace("<", "&lt;")
-    if "<" in author:
-        author = author.replace("<", "&lt;")
+
     # Debug 
     page = [f"<meta http-equiv='refresh' content='3; url=/w/{title}'>"]
     page.append("You will be redirected in 3 seconds...")

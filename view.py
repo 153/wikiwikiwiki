@@ -1,9 +1,14 @@
 import os, re, time
 from flask import Blueprint, request, redirect
-import markdown
+import mistune
 from utils import *
 
 view = Blueprint("view", __name__)
+
+markdown = mistune.create_markdown(escape=False,
+    plugins=['strikethrough', 'footnotes', 'table', 'url',
+             'task_lists', 'abbr', 'mark', 'superscript',
+             'subscript', 'spoiler'])
 
 def load_page(page):
     if not page_exist(page):
@@ -14,7 +19,7 @@ def load_page(page):
     return page
 
 def format_page(title, content, preview=0):
-    content = markdown.markdown(content)
+    content = markdown(content)
     content = link_processor(content)
     if preview is True:
         return content
