@@ -111,7 +111,7 @@ def popular():
         page.append(f"<div class='column'>{i}</div>")
     page.append("</div>")
     page = "\n".join(page)
-    page += "<hr><a style='color:darkred' href='/w/'>home</a>"
+    page += "<a style='color:darkred' href='/w/'>home</a>"
     return page
         
     
