@@ -1,5 +1,6 @@
 from flask import Flask, request
 from view import view
+from edit import edit
 
 
 app = Flask(__name__,
@@ -8,6 +9,7 @@ app = Flask(__name__,
             )
 
 app.register_blueprint(view)
+app.register_blueprint(edit)
 
 
 if __name__ == "__main__":
