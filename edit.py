@@ -19,7 +19,6 @@ def page_editor(page=None):
     title = ""
     content = ""
     data = request.form
-    print(data)
     if request.method == "GET":
         if page_exist(page):
             with open(f"pages/{page}.txt", "r") as content:
@@ -30,7 +29,6 @@ def page_editor(page=None):
     else:
         if "title" in data:
             title = fn_check(data["title"])
-            print(title)
         if "content" in data:
             content = data["content"].strip()
         if "author" in data:
@@ -40,6 +38,9 @@ def page_editor(page=None):
             if len(title):
                 return publish(title, content, author)
 
+    if len(content):
+        if "\r" in content:
+            content = content.replace("\r", "")
     if not wl.approve():
         return wl.show_captcha(0, f"/e/{title}")
     with open("html/edit.html") as temp:
@@ -66,23 +67,22 @@ def publish(title, content, author=None):
 
     # Cleanup input
     data = request.form
+    author = author.strip()[:25]    
     title = title[:20]
-    content = content.strip()[:10000]
     if "\r" in content:
         content = content.replace("\r", "")
-    author = author.strip()[:25]
-
+    content = content.strip()[:10000]
+    if "<" in content:
+        content = content.replace("<", "&lt;")
+    if "<" in author:
+        author = author.replace("<", "&lt;")
     # Debug 
     page = [f"<meta http-equiv='refresh' content='3; url=/w/{title}'>"]
     page.append("You will be redirected in 3 seconds...")
     page.append("<pre>")
-    page.append(f"title: {title}")
-    page.append(f"content:\n{content}")
-    page.append(f"author: {author}")
-
-    fn = title + ".txt"
-
+    
     # Get revision number
+    fn = title + ".txt"
     revisions = []
     pages = os.listdir("pages")
     for f in pages:
@@ -90,7 +90,6 @@ def publish(title, content, author=None):
             revisions.append(f)
 
     fnr = fn + "." + str(len(revisions))
-    page.append(str(revisions))
     page.append(f"Revision: {fnr}")
 
     # Write the page 

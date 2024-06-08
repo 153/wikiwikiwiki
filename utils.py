@@ -3,7 +3,7 @@ import os, re, time
 def page_index():
     pagedir = os.listdir("pages")
     page = "<link rel='stylesheet' href='/style.css'>"
-    page += "<h2>AllPages</h2><ul>"
+    page += "<h1>All Pages</h1><ul>"
     page += "<style>a {color: green}</style>"
     
     for p in pagedir:
@@ -46,5 +46,5 @@ def link_processor(content):
 def page_head(title):
     page = [f"<title>WWW: {title}</title>"]
     page.append("<link rel='stylesheet' href='/style.css'>")
-    page.append(f"<h2>{title}</h2>")
+    page.append(f"<h1>{title}</h1>")
     return page
