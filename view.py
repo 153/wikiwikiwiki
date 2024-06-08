@@ -42,7 +42,7 @@ def home_page():
 def page_v(page):
     if page == "HomePage":
         return home_page()
-    if page == "AllPages":
+    if page == "all":
         return page_index()
     elif page_exist(page):
         return load_page(page)

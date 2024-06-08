@@ -56,14 +56,18 @@ def fn_check(fn):
     return fn
 
 def publish(title, content, author=None):
-    if title in ["HomePage", "AllPages", "MarkUp"]:
+    if title in ["HomePage", "all", "MarkUp"]:
         return "Sorry, you can't edit these pages."
+
+    # Cleanup input
     data = request.form
     title = title[:20]
     content = content.strip()[:10000]
     if "\r" in content:
         content = content.replace("\r", "")
     author = author.strip()[:25]
+
+    # Debug 
     page = [f"<meta http-equiv='refresh' content='3; url=/w/{title}'>"]
     page.append("<pre>")
     page.append(f"title: {title}")
@@ -71,17 +75,22 @@ def publish(title, content, author=None):
     page.append(f"author: {author}")
 
     fn = title + ".txt"
-    revisions = []
 
+    # Get revision number
+    revisions = []
     pages = os.listdir("pages")
     for f in pages:
         if f.startswith(fn + "."):
             revisions.append(f)
-    page.append(str(revisions))
+
     fnr = fn + "." + str(len(revisions))
+    page.append(str(revisions))
     page.append(f"Revision: {fnr}")
+
+    # Write the page 
     with open(f"pages/{fnr}", "w") as rev:
         rev.write(content)
     with open(f"pages/{fn}", "w") as rev:
         rev.write(content)
+        
     return "\n".join(page)
