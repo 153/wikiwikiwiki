@@ -25,6 +25,8 @@ def publish(title, content, author=None):
     # Cleanup input
     data = request.form
     author = author[:25].strip()
+    if "<" in author:
+        author.replace("<", "")
     title = title[:20]
     if "\r" in content:
         content = content.replace("\r", "")
