@@ -180,7 +180,8 @@ def revision_index(title):
         meta = meta.read().splitlines()
     meta = [m.split() for m in meta]
     revisions = [x for x in pagedir if x.startswith(title + ".")]
-    revisions.remove(title + ".txt")
+    if title + ".txt" in revisions:
+        revisions.remove(title + ".txt")
     revisions = [x.split(".txt.")[1] for x in revisions]
     revisions = sorted(revisions, key=int)
     revisions = {f"{title}.txt.{x}": [] for x in revisions}
