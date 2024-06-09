@@ -222,6 +222,8 @@ def revision_index(title):
                 x = f"<b style='color:red'>{t[3]}</b>"
         elif n > 0 and len(t[3]) > 0:
             x = t[3]
+        elif n == 0 and len(t[3]):
+            x = f"<span style='color:black'>{t[3]}</span>"
         else:
             x = "-"
         page.append(f"<tr><td>{t[0]}<td>{t[1]}<td>{t[2]}<td>{x}")
