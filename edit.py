@@ -84,7 +84,7 @@ def backlinks(fn, content):
     print(links)
     print("!!!!!")
     linksout = link_processor(content, 1)
-    linksout = [x[:20] for x in linksout]
+    linksout = [x[:25] for x in linksout]
     print(linksout)
     
     if fn in linksout:

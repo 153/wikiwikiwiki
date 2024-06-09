@@ -15,6 +15,8 @@ def link_processor(content, getlinks=0):
         links.append(result)
         if page_exist(result):
             return w_link.format(result)
+        if len(result) > 20:
+            return result
         return n_link.format(result)
     content = re.sub(pascal, lambda x: check_pascal(x.group()), content)
 
@@ -24,6 +26,8 @@ def link_processor(content, getlinks=0):
         links.append(result)
         if page_exist(result):
             return w_link.format(result)
+        if len(result) > 20:
+            return result
         return n_link.format(result)
     content = re.sub(brackets, lambda x: check_bracket(x.group()), content)
 
