@@ -208,7 +208,7 @@ def revision_index(title):
     page.append("<table><tr><th>Title.Version<th>Date<th>Author<th>Length")
     for n, t in enumerate(table):
         t[0] = t[0].replace(".txt.", ".")
-        t[0] = f"<a href='/o/{t[0]}'>{t[0]}</a>"
+        t[0] = f"<a style='color:olive' href='/o/{t[0]}'>{t[0]}</a>"
         if n > 0 and len(table[n-1][3]):
             if len(t[3]) == 0:
                 x = "-"
