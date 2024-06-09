@@ -205,7 +205,7 @@ def revision_index(title):
         v[0] = time.strftime('%Y.%m.%d [%a] %H:%M', v[0])
         table.append([r, *v])
 
-    page.append("<table>")
+    page.append("<table><tr><th>Title.Version<th>Date<th>Author<th>Length")
     for n, t in enumerate(table):
         t[0] = t[0].replace(".txt.", ".")
         t[0] = f"<a href='/o/{t[0]}'>{t[0]}</a>"
