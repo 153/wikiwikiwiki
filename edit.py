@@ -82,9 +82,7 @@ def backlinks(fn, content):
         line = line.split(" ")
         links[line[0]] = line[1:]
     print(links)
-    print("!!!!!")
     linksout = link_processor(content, 1)
-    linksout = [x[:25] for x in linksout]
     print(linksout)
     
     if fn in linksout:

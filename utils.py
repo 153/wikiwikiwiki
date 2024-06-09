@@ -12,22 +12,24 @@ def link_processor(content, getlinks=0):
     links = []
     pascal = r"\b([A-Z][a-z]+){2,}\b"
     def check_pascal(result):
-        links.append(result)
         if page_exist(result):
+            links.append(result)
             return w_link.format(result)
         if len(result) > 20:
             return result
+        links.append(result)
         return n_link.format(result)
     content = re.sub(pascal, lambda x: check_pascal(x.group()), content)
 
     brackets = r"\[\[([a-zA-Z0-9_]+)\]\]"
     def check_bracket(result):
         result = result[2:-2]
-        links.append(result)
         if page_exist(result):
+            links.append(result)
             return w_link.format(result)
         if len(result) > 20:
             return result
+        links.append(result)
         return n_link.format(result)
     content = re.sub(brackets, lambda x: check_bracket(x.group()), content)
 
