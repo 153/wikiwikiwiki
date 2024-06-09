@@ -7,11 +7,9 @@ from utils import *
 edit = Blueprint("edit", __name__)
 
 def fn_check(fn):
-    print(fn)
     if " " in fn:
         fn = fn.replace(" ", "_")
     fn = re.sub(r"[^a-zA-Z0-9_]", "", fn)
-    print(fn)
     return fn
 
 def publish(title, content, author=None):
@@ -81,9 +79,7 @@ def backlinks(fn, content):
     for line in linkdb:
         line = line.split(" ")
         links[line[0]] = line[1:]
-    print(links)
     linksout = link_processor(content, 1)
-    print(linksout)
     
     if fn in linksout:
         linksout.remove(fn)
@@ -97,14 +93,10 @@ def backlinks(fn, content):
     if fn not in links:
         links[fn] = []
         
-    print("!!!")
-    print(links)
-
     links = [" ".join([x, *links[x]]) for x in links]
     links = "\n".join(links)
     with open("data/links.txt", "w") as linkdb:
         linkdb.write(links)
-    print(links)
 
 @edit.route("/e/", methods=["GET"])
 def new_page():
