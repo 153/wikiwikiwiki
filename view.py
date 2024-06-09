@@ -228,6 +228,8 @@ def revision_index(title):
             x = "-"
         page.append(f"<tr><td>{t[0]}<td>{t[1]}<td>{t[2]}<td>{x}")
     page.append("</table>")
+    page.append("<p><a style='color:darkred' href='/w/'>home</a>")
+    page.append(f"// <a style='color:darkred' href='/w/{title}'>current</a>")
     return "\n".join(page)
 
 def revision_page(title, rev):
