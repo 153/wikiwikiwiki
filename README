@@ -1,0 +1,10 @@
+Install is simple
+
+1. `pip3 install -r requirements.txt`
+2. `python3 app.py`
+
+Server is now running at http://127.0.0.1:8123
+
+Public domain, including Jupiteroid Bold (font.ttf)
+
+Demo server: https://wiki.gikopoi.com/wikiwikiwiki

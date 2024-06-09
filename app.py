@@ -8,6 +8,7 @@ app = Flask(__name__,
             static_url_path = "",
             static_folder = "static",
             )
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 app.register_blueprint(view)
 app.register_blueprint(edit)

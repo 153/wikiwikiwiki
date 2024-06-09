@@ -8,14 +8,14 @@ from flask import Blueprint, request
 
 whitelist = Blueprint("whitelist", __name__)
 klen = 5
-image = ImageCaptcha(fonts=['droid.ttf'])
+image = ImageCaptcha(fonts=['font.ttf'])
 limit = 60
 
 def get_ip():
     return request.headers.get('X-Forwarded-For', request.remote_addr)
 
 def randstr(length):
-    letters = "234578"
+    letters = "23456789"
     key = "".join(list(random.choice(letters) for i in range(length)))
     return key
 
@@ -33,7 +33,7 @@ def genkey(ip):
 
 def addlog(ip, ig=0):
     log = ldlog()
-    if ip not in log or ig:
+    if (ip not in log) or ig:
         entry = genkey(ip)
         log[ip] = entry
         fi = "\n".join([" ".join(log[x]) for x in log])
@@ -70,7 +70,7 @@ def approve(ip=0, key=""):
     return False
 
 @whitelist.route('/captcha/')
-def show_captcha(hide=0, redir='.'):
+def show_captcha(hide=0, redir='/w'):
     ip = get_ip()
     mylog = addlog(ip)
     out = ""
