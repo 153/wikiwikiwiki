@@ -30,7 +30,7 @@ def publish(title, content, author=None):
     title = title[:20]
     if "\r" in content:
         content = content.replace("\r", "")
-    content = content.strip()[:10000]
+    content = content.strip()[:50000]
 
     # Debug 
     page = [f"<meta http-equiv='refresh' content='3; url=/w/{title}'>"]
