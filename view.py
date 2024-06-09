@@ -31,6 +31,7 @@ def format_page(title, content, preview=0):
     template.append("<hr>")
     template.append(f"<a style='color:darkred' href='/w/'>home</a> ")
     template.append(f"// <a style='color:darkred' href='/r/{title}'>reverse</a>")
+    template.append(f"// <a style='color:darkred' href='/o/{title}'>older</a>")
     template.append(f"// <a style='color:darkred' href='/e/{title}'>edit</a>")
     template.append("// modified: " + modified)
 
@@ -163,3 +164,77 @@ def backlinks(title):
     page.append("</ul>")
     print(links)
     return "\n".join(page)
+
+@view.route("/o/<title>")
+def revision(title):
+    rev = ""
+    if "." in title:
+        title, rev = title.split(".")
+    if not rev:
+        return revision_index(title)
+    return revision_page(title, rev)
+
+def revision_index(title):
+    pagedir = os.listdir("pages")
+    with open("data/log.txt", "r") as meta:
+        meta = meta.read().splitlines()
+    meta = [m.split() for m in meta]
+    revisions = [x for x in pagedir if x.startswith(title + ".")]
+    revisions.remove(title + ".txt")
+    revisions = [x.split(".txt.")[1] for x in revisions]
+    revisions = sorted(revisions, key=int)
+    revisions = {f"{title}.txt.{x}": [] for x in revisions}
+
+    for m in meta:
+        if m[1] in revisions:
+            revisions[m[1]] = m
+
+    table = []
+    for r in revisions:
+        v = revisions[r]
+        if not len(v):
+            table.append([r, "", "", ""])
+            continue
+        v = [v[0], v[4], v[3]]
+        v[0] = time.gmtime(int(v[0]))
+        v[0] = time.strftime('%Y.%m.%d [%a] %H:%M', v[0])
+        table.append([r, *v])
+
+    page = page_head(f"Revisions: {title}")
+    page.append("<table>")
+    for n, t in enumerate(table):
+        t[0] = t[0].replace(".txt.", ".")
+        t[0] = f"<a href='/o/{t[0]}'>{t[0]}</a>"
+        if n > 0 and len(table[n-1][3]):
+            if len(t[3]) == 0:
+                x = "-"
+            elif int(t[3]) > int(table[n-1][3]) :
+                x = f"<b style='color:green'>{t[3]}</b>"
+            elif int(t[3]) == 0:
+                x = f"<span style='color:black'>{t[3]}</span>"
+            elif int(t[3]) == int(table[n-1][3]):
+                x = f"<span style='color:black'>{t[3]}</span>"
+            else:
+                x = f"<b style='color:red'>{t[3]}</b>"
+        elif n > 0 and len(t[3]) > 0:
+            x = t[3]
+        else:
+            x = "-"
+        page.append(f"<tr><td>{t[0]}<td>{t[1]}<td>{t[2]}<td>{x}")
+    page.append("</table>")
+    return "\n".join(page)
+
+def revision_page(title, rev):
+    page = page_head(f"{title}, #{rev}")
+    fn = ".txt.".join([title, rev])
+    with open(f"pages/{fn}", "r") as entry:
+        entry = entry.read()
+
+    page.append(format_page(title, entry, True))
+    page.append(f"<textarea rows='15' style='width:600px'>{entry}</textarea>")
+    page.append("<hr><a style='color:darkred' href='/w/'>home</a>")
+    page.append(f"// <a style='color:darkred' href='/w/{title}'>current</a>")
+    page.append(f"// <a style='color:darkred' href='/o/{title}'>other revisions</a>")
+    
+    return "\n".join(page)
+    
