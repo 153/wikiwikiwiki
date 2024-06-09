@@ -1,5 +1,10 @@
-Welcome to the new WikiWikiWiki, an OpenSource project sponsored by the
-Gikopoi.com International Superstructure.
+----
+**Special pages:** [All Pages](/w/all) , [Recent Changes](/w/recent) , [Popularity](/w/popular)
+
+----
+Welcome to the new WikiWikiWiki, an
+[open source](https://github.com/153/wikiwikiwiki/) project sponsored by the
+GikoPoi community.
 
 We are the original c2 WikiWiki [[cloan]] for the VipQuality community, being
 a continuation of 4x13's ThisWiki. This is meant to be a wiki that can be
@@ -14,6 +19,3 @@ You don't want the WrongPeople to get ahold of precious VipCoin's!
 Please keep in mind that WikiWikiWiki is NOT a WikiWiki'Wiki. Go to
 [Meatball Wiki](http://meatballwiki.org/wiki/) if you are into that kind
 of thing. We are something more like TanasinnWiki back in its glory days. 
-
-----
-**Special pages:** [All Pages](/w/all) , [Recent Changes](/w/recent) , [Popularity](/w/popular)
