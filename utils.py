@@ -36,6 +36,7 @@ def link_processor(content, getlinks=0):
 
 def page_head(title):
     page = [f"<title>WWW: {title}</title>"]
+    page.append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
     page.append("<link rel='stylesheet' href='/style.css'>")
     page.append(f"<h1>{title}</h1>")
     return page

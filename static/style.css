@@ -16,12 +16,17 @@ td {border:1px solid black; padding: 3px}
 th {border: 2px solid #666; padding: 3px;
     background-color: #222; color: #ddd}
 
+img {max-width: 450px;}
+
 .row {border: 3px solid black;
       padding:8px;}
 
 .column {
   float: left;
   width: 33.33%;
+  overflow: scroll;
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .row:after {
