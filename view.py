@@ -175,6 +175,8 @@ def revision(title):
     return revision_page(title, rev)
 
 def revision_index(title):
+    page = page_head(f"Revisions: {title}")
+    
     pagedir = os.listdir("pages")
     with open("data/log.txt", "r") as meta:
         meta = meta.read().splitlines()
@@ -185,6 +187,8 @@ def revision_index(title):
     revisions = [x.split(".txt.")[1] for x in revisions]
     revisions = sorted(revisions, key=int)
     revisions = {f"{title}.txt.{x}": [] for x in revisions}
+    if len(revisions) == 0:
+        page.append("This page has never existed.")
 
     for m in meta:
         if m[1] in revisions:
@@ -201,7 +205,6 @@ def revision_index(title):
         v[0] = time.strftime('%Y.%m.%d [%a] %H:%M', v[0])
         table.append([r, *v])
 
-    page = page_head(f"Revisions: {title}")
     page.append("<table>")
     for n, t in enumerate(table):
         t[0] = t[0].replace(".txt.", ".")

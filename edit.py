@@ -150,5 +150,6 @@ def page_editor(page=None):
     preview = head + preview
     preview += "\n<hr><a style='color:darkred' href='/w/'>home</a> "
     preview += f"// <a style='color:darkred' href='/r/{title}'>reverse</a>"
+    preview += f"// <a style='color:darkred' href='/o/{title}'>older</a>"
     preview += f"// <a style='color:darkred' href='/w/{title}'>back</a>"
     return preview
