@@ -1,5 +1,5 @@
 import os, re, time
-from flask import Blueprint, request, redirect
+from flask import Blueprint, request, redirect, make_response
 import view
 import whitelist as wl
 from utils import *
@@ -30,9 +30,9 @@ def publish(title, content, author=None):
         content = content.replace("\r", "")
     content = content.strip()[:50000]
 
-    # Debug 
     page = [f"<meta http-equiv='refresh' content='3; url=/w/{title}'>"]
-    page.append("You will be redirected in 3 seconds...")
+    page.append(f"Updated page {title}")
+    page.append("<p>You will be redirected in 3 seconds...")
     page.append("<pre>")
     
     # Get revision number
@@ -59,7 +59,10 @@ def publish(title, content, author=None):
     update_log(fnr, lcon, author, ip)
     backlinks(title, content)
 
-    return "\n".join(page)
+    response = make_response("\n".join(page))
+    response.set_cookie("author", author)
+
+    return response
 
 def update_log(fn, lcon, author, ip):
     udt = str(int(time.time()))
@@ -110,6 +113,9 @@ def page_editor(page=None):
     title = ""
     content = ""
     data = request.form
+    set_name = request.cookies.get("author")
+    if set_name:
+        author = set_name
     if request.method == "GET":
         if page_exist(page):
             with open(f"pages/{page}.txt", "r") as content:
