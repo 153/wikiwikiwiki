@@ -13,6 +13,7 @@ def fn_check(fn):
     return fn
 
 def publish(title, content, author=None):
+    print(author)
     if not wl.approve():
         return wl.show_captcha(0, f"/e/{title}")
     if title in ["HomePage", "all", "MarkUp"]:
@@ -109,14 +110,14 @@ def new_page():
 @edit.route("/e/", methods = ["POST"])
 @edit.route("/e/<page>", methods=["POST", "GET"])
 def page_editor(page=None):
+    set_name = request.cookies.get("author")    
     author = "Anonymous"
     title = ""
     content = ""
     data = request.form
-    set_name = request.cookies.get("author")
-    if set_name:
-        author = set_name
     if request.method == "GET":
+        if set_name:
+            author = set_name        
         if page_exist(page):
             with open(f"pages/{page}.txt", "r") as content:
                 content = content.read()
