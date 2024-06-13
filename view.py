@@ -19,6 +19,8 @@ def load_page(page):
     return page
 
 def format_page(title, content, preview=0):
+    if "<" in content:
+        content = content.replace("<", "&lt;")
     content = markdown(content)
     content = link_processor(content)
     if preview is True:
