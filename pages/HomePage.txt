@@ -1,5 +1,5 @@
 ----
-**Special pages:** [All Pages](/w/all) , [Recent Changes](/w/recent) , [Popularity](/w/popular)
+**Special pages:** [All Pages](/w/all) , [Recent Changes](/w/recent) , [Popularity](/w/popular), [Random](/w/random)
 
 ----
 Welcome to the new WikiWikiWiki, an
@@ -19,3 +19,5 @@ You don't want the WrongPeople to get ahold of precious VipCoin's!
 Please keep in mind that WikiWikiWiki is NOT a WikiWiki'Wiki. Go to
 [Meatball Wiki](http://meatballwiki.org/wiki/) if you are into that kind
 of thing. We are something more like TanasinnWiki back in its glory days. 
+
+Wiki discussion: [Pohon BBS](https://bbs.gikopoi.com/tags/wiki/)
