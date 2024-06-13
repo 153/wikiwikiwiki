@@ -5,7 +5,7 @@ from utils import *
 
 view = Blueprint("view", __name__)
 
-markdown = mistune.create_markdown(escape=False,
+markdown = mistune.create_markdown(escape=True,
     plugins=['strikethrough', 'footnotes', 'table', 'url',
              'task_lists', 'abbr', 'mark', 'superscript',
              'subscript', 'spoiler'])
@@ -19,8 +19,6 @@ def load_page(page):
     return page
 
 def format_page(title, content, preview=0):
-    if "<" in content:
-        content = content.replace("<", "&lt;")
     content = markdown(content)
     content = link_processor(content)
     if preview is True:

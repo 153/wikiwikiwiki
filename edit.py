@@ -29,8 +29,6 @@ def publish(title, content, author=None):
     title = title[:20]
     if "\r" in content:
         content = content.replace("\r", "")
-    if "<" in content:
-        content.replace("<", "&lt;")
     content = content.strip()[:50000]
 
     page = [f"<meta http-equiv='refresh' content='3; url=/w/{title}'>"]
