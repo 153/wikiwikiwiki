@@ -1,4 +1,4 @@
-import os, re, time
+import os, re, time, random
 from flask import Blueprint, request, redirect
 import mistune
 from utils import *
@@ -114,7 +114,13 @@ def popular():
     page = "\n".join(page)
     page += "<a style='color:darkred' href='/w/'>home</a>"
     return page
-        
+
+def p_random():
+    pages = os.listdir("pages")
+    pages = [p[:-4] for p in pages if p[-4:] == ".txt"] 
+    print(pages)
+    page = random.choice(pages)
+    return redirect(f"/w/{page}")
     
 @view.route("/")
 def home():
@@ -134,6 +140,8 @@ def page_v(page):
         return recent_changes()
     elif page == "popular":
         return popular()
+    elif page == "random":
+        return p_random()
 
     elif page_exist(page):
         return load_page(page)
