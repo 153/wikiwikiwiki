@@ -41,7 +41,8 @@ def link_processor(content, getlinks=0):
     return content
 
 def page_head(title):
-    page = [f"<title>WWW: {title}</title>"]
+    page = ["<!DOCTYPE html><html>"]
+    page.append(f"<title>WWW: {title}</title>")
     page.append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
     page.append("<link rel='stylesheet' href='/style.css'>")
     page.append("<link rel='alternate' type='application/atom+xml' title='Recent edits' href='/feed.atom'>")
