@@ -29,7 +29,7 @@ blockquote {
 h1, h2, h3, h4 {
     line-height: 1.2;}
 
-code, pre {
+pre code {
     font-family:MS PGothic,Mona,IPAMonaPGothic,"giko2",sans-serif;
     font-size: 16px;
     line-height: 18px;
@@ -37,6 +37,14 @@ code, pre {
     width: auto;
     background-color: white;
     padding: 8px;
+}
+
+code.language-m {
+    font-family: monospace;
+}
+
+code.language-aa {
+    font-family:MS PGothic,Mona,IPAMonaPGothic,"giko2",sans-serif;
 }
 
 .row {border: 3px solid black;
