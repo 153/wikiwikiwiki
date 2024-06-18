@@ -44,5 +44,6 @@ def page_head(title):
     page = [f"<title>WWW: {title}</title>"]
     page.append("<meta name='viewport' content='width=device-width, initial-scale=1' />")
     page.append("<link rel='stylesheet' href='/style.css'>")
+    page.append("<link rel='alternate' type='application/atom+xml' title='Recent edits' href='/feed.atom'>")
     page.append(f"<h1>{title}</h1>")
     return page

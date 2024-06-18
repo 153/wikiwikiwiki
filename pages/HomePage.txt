@@ -1,5 +1,5 @@
 ----
-**Special pages:** [All Pages](/w/all) , [Recent Changes](/w/recent) , [Popularity](/w/popular), [Random](/w/random)
+**Special pages:** [All Pages](/w/all) , [Recent Changes](/w/recent) , [Popularity](/w/popular), [Random](/w/random), [Atom feed](/feed.atom)
 
 ----
 Welcome to the new WikiWikiWiki, an
