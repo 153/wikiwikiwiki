@@ -36,7 +36,7 @@ def feed():
     entries = []
     with open("data/log.txt", "r") as log:
         log = log.read().strip().splitlines()
-    log = log[:50]
+    log = log[::-1][:50]
     for entry in log:
         entry = entry.split()
         entry[0] = unix2atom(int(entry[0]))
