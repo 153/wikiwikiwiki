@@ -47,7 +47,7 @@ def feed():
                                   url=e_url,
                                   content=f"{entry[1][0]} revision #{entry[1][2]}")
         entries.append(entry)
-    publish = unix2atom(int(log[-1].split()[0]))
+    publish = unix2atom(int(log[0].split()[0]))
     entries.append("\n</feed>")
     entries = "".join(entries)
     output = feed_temp.format(title="Page edits on wikiwikiwiki",
