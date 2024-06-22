@@ -50,13 +50,13 @@ details.toc {
     display: inline-block;
     background-color: #eee;
     border: 2px dashed black;
-    padding: 9px;
-    width: auto;
+    padding: 15px;
 }
 
 details > ul {
     border-top: 2px dashed black;
     padding-top: 9px;
+    padding-right: 3em;
 }
 
 .row {border: 3px solid black;
