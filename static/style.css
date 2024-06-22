@@ -46,6 +46,19 @@ code.language-aa {
     font-family:MS PGothic,Mona,IPAMonaPGothic,"giko2",sans-serif;
 }
 
+details.toc {
+    display: inline-block;
+    background-color: #eee;
+    border: 2px dashed black;
+    padding: 9px;
+    width: auto;
+}
+
+details > ul {
+    border-top: 2px dashed black;
+    padding-top: 9px;
+}
+
 .row {border: 3px solid black;
       margin: auto;
       padding:8px;}
