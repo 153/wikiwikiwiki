@@ -26,7 +26,7 @@ def publish(title, content, author=None):
     author = author[:25].strip()
     if "<" in author:
         author.replace("<", "")
-    title = title[:20]
+    title = title[:50]
     if "\r" in content:
         content = content.replace("\r", "")
     content = content.strip()[:50000]
