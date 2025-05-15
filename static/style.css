@@ -38,6 +38,8 @@ pre code {
     padding: 8px;
 }
 
+code {background-color: white}
+
 code.language-m {
     font-family: monospace;
 }
@@ -57,6 +59,15 @@ details > ul {
     border-top: 2px dashed black;
     padding-top: 9px;
     padding-right: 3em;
+}
+
+figure {
+    background-color: #eee;
+    text-align: center;
+}
+figcaption {
+    text-align: right;
+    font-style: italic;
 }
 
 .row {border: 3px solid black;

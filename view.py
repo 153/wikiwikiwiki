@@ -1,8 +1,8 @@
 import os, re, time, random
 from flask import Blueprint, request, redirect
 import mistune
-from mistune.directives import RSTDirective
-from mistune.directives import TableOfContents
+from mistune.directives import FencedDirective, RSTDirective
+from mistune.directives import TableOfContents, Image, Figure
 from utils import *
 
 view = Blueprint("view", __name__)
@@ -11,9 +11,10 @@ markdown = mistune.create_markdown(escape=True,
     plugins=['strikethrough', 'footnotes', 'table', 'url',
              'task_lists', 'abbr', 'mark', 'superscript',
              'subscript', 'spoiler',
+             FencedDirective([
+                 Image(), Figure(),]),
              RSTDirective([
-                 TableOfContents(),
-             ]),
+                 TableOfContents(),]),
     ])
 
 def load_page(page):
@@ -135,6 +136,10 @@ def home():
 @view.route("/w/")
 def home_page():
     return load_page("HomePage")
+
+@view.route("/rules")
+def rules_page():
+    return load_page("WikiRules")
 
 @view.route("/w/<page>")
 def page_v(page):

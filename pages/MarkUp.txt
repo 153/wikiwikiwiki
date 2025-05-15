@@ -8,3 +8,7 @@ There are a few changes:
     * ... notice how TestTest''s become TestTest's, vs TestTests ... 
     * ... or WikiWiki'Wiki vs WikiWikiWiki...
     * ... although [[cloan]]s works fine!
+* A table of contents can be inserted with `.. toc::` on its own line
+* We have numerous other [Markdown extensions](https://mistune.lepture.com/en/latest/plugins.html) via Mistune; experiment in SandBox and find our full features.
+
+Please also see our StyleGuide.
